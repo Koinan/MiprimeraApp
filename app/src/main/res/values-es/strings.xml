@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">eSport</string>
+    <string name="app_name">Calendario App</string>
     <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="Email">Email</string>
+
 </resources>

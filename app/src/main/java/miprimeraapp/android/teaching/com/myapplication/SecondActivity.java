@@ -13,9 +13,9 @@ public class SecondActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        Intent intent = getIntent();
-        String valor = intent.getStringExtra("paco");
-        Log.d("SecondActivity", "valor de paco: " + valor);
+        Intent intent = getIntent(); //recibo el extra
+        String valor = intent.getStringExtra("paco"); //lo traduzco
+        Log.d("SecondActivity", "valor de paco: " + valor); //lo imprimo
 
     }
 
