@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         Intent intent = new Intent(this, SecondActivity.class); //creo la intención de ejecutar la segunda activity en la memoria
-        intent.putExtra("paco", "VALOR DE PACO");
+        intent.putExtra("paco", "VALOR DE PACO"); //añado un valor extra
         startActivity(intent); //ejecuto la intención
     }
 
@@ -66,7 +66,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick3(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 1234"));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 647705215"));
+
+
+
+        startActivity(intent);
+    }
+    public void onClick4(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
 
 
 
