@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Abrir Primera Activity    "
         android:onClick = "onClick" />
+
 </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
