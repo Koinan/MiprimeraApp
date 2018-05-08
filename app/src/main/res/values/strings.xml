@@ -5,5 +5,7 @@
     <string name="Password">Password</string>
     <string name="Gender">Gender: </string>
     <string name="Age">Age: </string>
+    <string name="usernameerror">Usuario no puede estar vacio</string>
+    <string name="passworderror">Password no puede estar vacio</string>
 
 </resources>

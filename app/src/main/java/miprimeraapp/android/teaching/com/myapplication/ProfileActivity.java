@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void onClick5(View view) {
         //Imprimo los datos con un get.text en Logcat
+        Intent intent = new Intent(this, LoginActivity.class);
         Log.d("ProfileActivity", "Username:" + usernameEditText.getText());
         Log.d("ProfileActivity", "Email : " + EmailEditText.getText());
         Log.d("ProfileActivity", "Password : " + passwordEditText.getText());
@@ -45,11 +46,12 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d("ProfileActivity", "Gender female");
 
         }
+        startActivity(intent);
 
         }
 
 
-    public void onClick(View view) {
+    public void onClickexit(View view) {
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
