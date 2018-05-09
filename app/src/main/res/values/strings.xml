@@ -1,11 +1,25 @@
 <resources>
-    <string name="app_name">Aplicacionn</string>
+    <string name="app_name">App test</string>
     <string name="Username">Username</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="Gender">Gender: </string>
     <string name="Age">Age: </string>
-    <string name="usernameerror">Usuario no puede estar vacio</string>
-    <string name="passworderror">Password no puede estar vacio</string>
+    <string name="usernameerror">User cant be empty</string>
+    <string name="passworderror">Password cant be empty</string>
+    <string name="Nuevaventana">New Window</string>
+    <string name="Login">Log in</string>
+    <string name="Galeria">Galery</string>
+    <string name="Gowow">Go WoW</string>
+    <string name="GoList">Go list</string>
+    <string name="Register">Register</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Exit">Exit</string>
+    <string name="Position">Position  </string>
+    <string name="Save">Save</string>
+    <string name="LoginToast">Fill your Login </string>
+
+
+
 
 </resources>
