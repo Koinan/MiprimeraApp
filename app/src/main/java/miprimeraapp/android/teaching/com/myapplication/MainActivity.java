@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick2(View view) {
-        String url = "https://WWW.GOOGLE.COM"; //creo la url que quiera
+        String url = "https://eu.battle.net/forums/en/wow/"; //creo la url que quiera
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url)); //ejecuto la accion de Ver algo, y ejecuto el comando Uri.parse para ejecutar la URL
 
         startActivity(intent); //ejecuto la intencion
@@ -73,11 +73,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void onClick4(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-
-
-
+    }
+    public void onClickregister (View view) {
+        Intent intent = new Intent (this, ProfileActivity.class);
+        startActivity(intent);
+    }
+    public void gogaleria (View view) {
+        Intent intent = new Intent (this, GalleryActivity.class);
         startActivity(intent);
     }
 }

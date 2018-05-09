@@ -7,45 +7,67 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     android:layout_margin="10dp"
     android:gravity="bottom|center_horizontal"
     tools:context=".MainActivity">
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="@drawable/gif1" />
-    <Button
+    <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:onClick="onClick"
         android:textAllCaps="false"
         android:textColor="#0234FF"
+        android:src="@drawable/newwindow1"
+        android:scaleType="centerInside"
+        android:background="@drawable/button1"
         android:text="Nueva ventana" />
-    <Button
+    <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:onClick="onClick4"
         android:textAllCaps="false"
         android:textColor="#0234FF"
+        android:src="@drawable/login1"
+        android:scaleType="centerInside"
+        android:background="@drawable/button1"
         android:text="Log in" />
 
-    <Button
+    <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:onClick="onClickregister"
+        android:textAllCaps="false"
+        android:textColor="#0234FF"
+        android:src="@drawable/register1"
+        android:scaleType="centerInside"
+        android:background="@drawable/button1"
+        android:text="Register" />
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="gogaleria"
+        android:textAllCaps="false"
+        android:textColor="#0234FF"
+        android:src="@drawable/galeria2"
+        android:scaleType="centerInside"
+        android:background="@drawable/button1"
+        android:text="Galería" />
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:onClick="onClick2"
-        android:textColor="#0000FF"
-        android:fontFamily="sans-serif-condensed"
         android:textAllCaps="false"
-        android:text="Abrir Web" />
+        android:textColor="#0234FF"
+        android:src="@drawable/wow1"
+        android:scaleType="centerInside"
+        android:background="@drawable/button1"
+        android:text="Go wow" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:onClick="onClick3"
-        android:textColor="@color/colorAccent"
-        android:text="LLámame" />
 
 
 

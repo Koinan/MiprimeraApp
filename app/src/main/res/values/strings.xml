@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">eSport</string>
+    <string name="app_name">Aplicacionn</string>
     <string name="Username">Username</string>
-    <string name="Password">Password</string>
     <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Gender">Gender: </string>
+    <string name="Age">Age: </string>
+    <string name="usernameerror">Usuario no puede estar vacio</string>
+    <string name="passworderror">Password no puede estar vacio</string>
+
 </resources>
