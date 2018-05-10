@@ -1,7 +1,23 @@
 <resources>
-    <string name="app_name">Calendario App</string>
-    <string name="Username">Username</string>
-    <string name="Password">Password</string>
+    <string name="app_name">App Prueba</string>
+    <string name="Username">Usuario</string>
     <string name="Email">Email</string>
+    <string name="Password">Contraseña</string>
+    <string name="Gender">Sexo: </string>
+    <string name="Age">Edad: </string>
+    <string name="usernameerror">El Usuario no puede estar vacío</string>
+    <string name="passworderror">La contraseña no puede estar vacía</string>
+    <string name="Nuevaventana">Nueva ventana</string>
+    <string name="Login">Log in</string>
+    <string name="Galeria">Galería</string>
+    <string name="Gowow">Ir a WoW</string>
+    <string name="GoList">Ir a la lista</string>
+    <string name="Register">Registrar</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Exit">Salir</string>
+    <string name="Save">Guardar</string>
+    <string name="Position">Posicion </string>
+    <string name="LoginToast">Ingrese su Login </string>
+
 
 </resources>

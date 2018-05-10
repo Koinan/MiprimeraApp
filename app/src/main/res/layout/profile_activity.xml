@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="14dp">
 
     <LinearLayout
@@ -153,11 +152,9 @@
                 android:layout_height="46dp"
                 android:backgroundTint="#00FF00"
                 android:onClick="onClick5"
-                android:text="SAVE"
+                android:text="@string/Save"
                 android:textAllCaps="false"
-                android:textColor="#000000"
-                tools:layout_editor_absoluteX="14dp"
-                tools:layout_editor_absoluteY="392dp" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/exit_button"
@@ -165,11 +162,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF0000"
                 android:onClick="onClickexit"
-                android:text="EXIT"
+                android:text="@string/Exit"
                 android:textAllCaps="false"
-                android:textColor="#000000"
-                tools:layout_editor_absoluteX="126dp"
-                tools:layout_editor_absoluteY="432dp" />
+                android:textColor="#000000" />
         </LinearLayout>
 
     </LinearLayout>

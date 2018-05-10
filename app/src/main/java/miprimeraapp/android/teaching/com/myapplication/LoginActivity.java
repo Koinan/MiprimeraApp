@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
@@ -17,6 +18,8 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
+        Toast.makeText(this, getString(R.string.LoginToast),
+                Toast.LENGTH_LONG).show();
     }
     public void onClickexit2 (View view) {
         usernameEditText.setText("");
