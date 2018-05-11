@@ -64,12 +64,7 @@ public class ListActivity extends BaseActivity {
         inflate.inflate(R.menu.menu_main_activity, menu);
         return true;
     }
-    @Override
-    public boolean onCreateContextMenu(Menu menu) {
-        MenuInflater inflate = getMenuInflater();
-        inflate.inflate(R.menu.delete_context_menu, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -1,8 +1,13 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,11 +15,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.Year;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProfileActivity extends BaseActivity {
     //Asigno los atributos
@@ -34,6 +45,25 @@ public class ProfileActivity extends BaseActivity {
         EmailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         ageEditText = findViewById((R.id.age));
+        ageEditText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus) {
+                    new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayofMonth    ) {
+                            //Para calcular la edad a partir de dos fechas
+                            int anoactual = Calendar.getInstance().get(Calendar.YEAR);
+                            int edad = anoactual - year;
+                            final int selectedDate = dayofMonth + (month+1) + year;
+                           ageEditText.setText(String.valueOf(edad));
+                        }
+                    },1970,1,1).show();
+                }
+            }
+        });
         radioButtonF = findViewById(R.id.genderf);
         radiobuttonM = findViewById(R.id.genderm);
         Toolbar myToolBar = findViewById(R.id.toolbar);
@@ -45,7 +75,12 @@ public class ProfileActivity extends BaseActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
 
+
+
+
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
@@ -69,12 +104,36 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void borrarmethod () {
-        usernameEditText.setText("");
-        passwordEditText.setText("");
-        EmailEditText.setText("");
-        ageEditText.setText("");
-        radioButtonF.setChecked(false);
-        radiobuttonM.setChecked(false);
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.dialog_message)
+                .setTitle(R.string.dialog_title);
+
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                usernameEditText.setText("");
+                passwordEditText.setText("");
+                EmailEditText.setText("");
+                ageEditText.setText("");
+                radioButtonF.setChecked(false);
+                radiobuttonM.setChecked(false);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        builder.setNeutralButton(R.string.neutral, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
     public void onClick5(View view) {
         //Imprimo los datos con un get.text en Logcat
@@ -93,8 +152,10 @@ public class ProfileActivity extends BaseActivity {
         startActivity(intent);
 
 
+
         }
         private void botonguardar() {
+
             //Imprimo los datos con un get.text en Logcat
             Intent intent = new Intent(this, LoginActivity.class);
             Log.d("ProfileActivity", "Username:" + usernameEditText.getText());

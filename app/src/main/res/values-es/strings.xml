@@ -18,6 +18,11 @@
     <string name="Save">Guardar</string>
     <string name="Position">Posicion </string>
     <string name="LoginToast">Ingrese su Login </string>
+    <string name="dialog_message">Estás seguro de que quieres borrar este usuario? </string>
+    <string name="dialog_title">Confirmar </string>
+    <string name="ok">Sí </string>
+    <string name="cancel">No </string>
+    <string name="neutral">Cancel </string>
 
 
 </resources>
