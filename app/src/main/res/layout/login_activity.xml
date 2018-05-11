@@ -1,80 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<RelativeLayout
-    android:id="@+id/relative1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="@string/Username"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-    <EditText
-        android:id="@+id/username"
-        android:layout_below="@id/textView1"
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relative1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/Username"
-        android:inputType="text"
-        android:lines="1"
-        android:maxLength="10" />
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/username"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="@string/Password"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+    <include layout="@layout/main_toolbar2" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_below="@id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/Password"
-        android:inputType="textPassword"
-        android:lines="1"
-        android:maxLength="10" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:padding="4dp"
+            android:text="@string/Username"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_below="@id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:onClick="doLogin"
-        android:text="@string/Login"
-        android:textAllCaps="true"
-        android:textColor="#000000" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView1"
+            android:hint="@string/Username"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="10" />
 
-    <Button
-        android:id="@+id/exit_button"
-        android:layout_toEndOf="@id/save_button"
-        android:layout_alignBottom="@id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickexit2"
-        android:text="@string/Cancel"
-        android:textAllCaps="true"
-        android:textColor="#000000" />
-    <Button
-        android:id="@+id/register_button2"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="doRegister"
-        android:text="@string/Register"
-        android:textAllCaps="true"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username"
+            android:padding="4dp"
+            android:text="@string/Password"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView3"
+            android:hint="@string/Password"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="10" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_below="@id/password"
+            android:onClick="doLogin"
+            android:text="@string/Login"
+            android:textAllCaps="true"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/save_button"
+            android:layout_toEndOf="@id/save_button"
+            android:onClick="onClickexit2"
+            android:text="@string/Cancel"
+            android:textAllCaps="true"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/register_button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="doRegister"
+            android:text="@string/Register"
+            android:textAllCaps="true"
+            android:textColor="#000000" />
+
+    </RelativeLayout>

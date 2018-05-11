@@ -1,9 +1,15 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,17 +22,24 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends BaseActivity {
     //Asigno los nombres e iconos a los atributos
 
-    String[] gameNames = {"Juego1", "World of Warcraft"};
-    int[] gameIcons = {R.drawable.newwindow1, R.drawable.wow1};
+    String[] gameNames = {"Starcraft", "World of Warcraft"};
+    int[] gameIcons = {R.drawable.sc1, R.drawable.wow1};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        Toolbar myToolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolBar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
+
+        getSupportActionBar().setTitle("eSports");
+
+
 
         //Encuentro los items en la lista XML y ejecuto el adapter
 
@@ -45,6 +58,31 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflate = getMenuInflater();
+        inflate.inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+    @Override
+    public boolean onCreateContextMenu(Menu menu) {
+        MenuInflater inflate = getMenuInflater();
+        inflate.inflate(R.menu.delete_context_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int identificador = item.getItemId();
+        switch (identificador) {
+            case R.id.actionbuttom:
+                Intent intent = new Intent(this, LoginActivity.class);
+                                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private class MyAdapter extends BaseAdapter {
 
         //Con esta clase creo el adaptador, que hereda de Baseadapter
@@ -68,7 +106,7 @@ public class ListActivity extends AppCompatActivity {
             //Éste método "infla" la XML con los datos
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.list_item, parent, false);
-            //Pongo los iconos y los nombres y les añado una posicion en la lista
+            //Situo los iconos y los nombres y les añado una posición en la lista
             ImageView icon = rowView.findViewById(R.id.imagentest);
             icon.setImageResource(gameIcons[position]);
 

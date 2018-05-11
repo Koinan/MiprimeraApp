@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="14dp">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="4dp">
+        >
 
+        <include layout="@layout/main_toolbar2" />
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -149,8 +146,8 @@
             <Button
                 android:id="@+id/save_button"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:backgroundTint="#00FF00"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:onClick="onClick5"
                 android:text="@string/Save"
                 android:textAllCaps="false"
@@ -160,7 +157,7 @@
                 android:id="@+id/exit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF0000"
+                android:layout_gravity="bottom"
                 android:onClick="onClickexit"
                 android:text="@string/Exit"
                 android:textAllCaps="false"
@@ -168,7 +165,3 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-</android.support.constraint.ConstraintLayout>

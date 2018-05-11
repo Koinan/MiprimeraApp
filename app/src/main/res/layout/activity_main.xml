@@ -10,7 +10,6 @@
     android:background="@color/colorPrimaryDark"
     android:gravity="bottom|center_horizontal"
     tools:context=".MainActivity">
-
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="250dp"
