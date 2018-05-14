@@ -11,7 +11,7 @@
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".SecondActivity" />
         <activity
             android:name=".ProfileActivity"
@@ -28,7 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity" />
-        <activity android:name=".FragmenTestActivity"></activity>
+        <activity android:name=".FragmenTestActivity" />
+        <activity android:name=".GameDetailActivity"></activity>
     </application>
 
 </manifest>

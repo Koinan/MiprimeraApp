@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".GameDetailActivity">
+
+    <include layout="@layout/main_toolbar2"
+        android:id="@+id/toolbar"/>
+
+
+    <ImageView
+        android:id="@+id/game_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_below="@id/toolbar"
+        android:adjustViewBounds="true"
+        android:foregroundGravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/wow1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/Fondodetail"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/toolbar"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/imagen1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/Info"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Fondodetail"
+        android:text="@string/InfoWoW"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/botonurl"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Info"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="Website"
+        android:text="@string/OfficialWebsite" />
+
+
+</RelativeLayout>

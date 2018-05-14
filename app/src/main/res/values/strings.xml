@@ -23,6 +23,9 @@
     <string name="ok">Yes </string>
     <string name="cancel">No </string>
     <string name="neutral">Cancel </string>
+    <string name="GameDetail">Game Detail </string>
+    <string name="InfoWoW">"World of Warcraft is a MMORPG developed by Blizzard. Is the fourth game launched in the fantasy universe of Warcraft enviroment, which first game was Warcraft: Orcs and Humans in 1994. WoW recreates inside the world Azeroth, four years laters after the previous release Warcraft III: The Frozen Throne. Blizzard released WoW in the 2th of September of 2001"</string>
+    <string name="OfficialWebsite">Official Website </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
