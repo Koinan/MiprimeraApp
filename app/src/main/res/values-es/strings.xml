@@ -23,6 +23,8 @@
     <string name="ok">Sí </string>
     <string name="cancel">No </string>
     <string name="neutral">Cancel </string>
-
+    <string name="GameDetail">Detalles del juego </string>
+    <string name="InfoWoW">"World of Warcraft (WoW) es un videojuego de rol multijugador masivo en línea desarrollado por Blizzard Entertainment. Es el cuarto juego lanzado establecido en el universo fantástico de Warcraft, el cual fue introducido por primera vez por Warcraft: Orcs and Humans en 1994.4​ World of Warcraft transcurre dentro del mundo de Azeroth, cuatro años después de los sucesos finales de la anterior entrega de Warcraft, Warcraft III: The Frozen Throne.5​ Blizzard Entertainment anunció World of Warcraft el 2 de septiembre de 2001."</string>
+    <string name="OfficialWebsite">Web Oficial </string>
 
 </resources>

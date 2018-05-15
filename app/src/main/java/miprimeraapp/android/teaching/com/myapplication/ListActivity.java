@@ -22,11 +22,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import miprimeraapp.android.teaching.com.myapplication.interactors.GamesInteractor;
+
 public class ListActivity extends BaseActivity {
     //Asigno los nombres e iconos a los atributos
 
-    String[] gameNames = {"Starcraft", "World of Warcraft"};
-    int[] gameIcons = {R.drawable.sc1, R.drawable.wow1};
+    String[] gameNames = {"World of Warcraft", "Starcraft"};
+    int[] gameIcons = {R.drawable.wow1, R.drawable.sc1};
 
 
     @Override
@@ -46,14 +48,16 @@ public class ListActivity extends BaseActivity {
         ListView listView = findViewById(R.id.list_View);
         listView.setAdapter (new MyAdapter());
 
-        //Al clicar los items de la lista ejecuto una Toast
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position , long id) {
-                    Toast.makeText(ListActivity.this, getString(R.string.Position) + position,
-                            Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent (ListActivity.this, GameDetailActivity.class);
+                    int gameId = new GamesInteractor().getGames().get(position).getId();
+                    intent.putExtra("iddeljuego", gameId);
+                    startActivity(intent);
 
             }
         });
@@ -72,6 +76,7 @@ public class ListActivity extends BaseActivity {
         switch (identificador) {
             case R.id.actionbuttom:
                 Intent intent = new Intent(this, LoginActivity.class);
+
                                 startActivity(intent);
                 break;
         }
