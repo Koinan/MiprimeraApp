@@ -1,8 +1,10 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -74,7 +76,33 @@ public class ProfileActivity extends BaseActivity {
         myActionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
+        String saveduser = sharedPref.getString("username_key", "no-user");
+        String saveduser3 = sharedPref.getString("email_key", "no-email");
+        String saveduser4 = sharedPref.getString("age_key", "no-age");
+        usernameEditText.setText(saveduser);
+        EmailEditText.setText(saveduser3);
+        ageEditText.setText(saveduser4);
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        String username = usernameEditText.getText().toString();
+        String age = ageEditText.getText().toString();
+        String email = EmailEditText.getText().toString();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = sharedPref.edit();
+        myEditor.putString("username_key", username);
+        myEditor.putString("age_key", age);
+        myEditor.putString("email_key", email);
+
+        myEditor.apply();
 
 
 
@@ -150,18 +178,21 @@ public class ProfileActivity extends BaseActivity {
 
         }
         startActivity(intent);
-
-
-
         }
         private void botonguardar() {
 
-            //Imprimo los datos con un get.text en Logcat
             Intent intent = new Intent(this, LoginActivity.class);
             Log.d("ProfileActivity", "Username:" + usernameEditText.getText());
             Log.d("ProfileActivity", "Email : " + EmailEditText.getText());
             Log.d("ProfileActivity", "Password : " + passwordEditText.getText());
             Log.d("ProfileActivity", "Age : " + ageEditText.getText());
+            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
+            SharedPreferences.Editor myEditor = sharedPref.edit();
+            myEditor.remove("username_key");
+            myEditor.remove("email_key");
+            myEditor.remove("age_key");
+            myEditor.apply();
+
             //Radio button
             if (radiobuttonM.isChecked()) {
                 Log.d("ProfileActivity", "Gender male");
@@ -177,6 +208,12 @@ public class ProfileActivity extends BaseActivity {
 
     public void onClickexit(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = sharedPref.edit();
+        myEditor.remove("username_key");
+        myEditor.remove("email_key");
+        myEditor.remove("age_key");
+        myEditor.apply();
 
         startActivity(intent);
     }

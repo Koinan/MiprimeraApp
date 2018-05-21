@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,14 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miprimeraapp.android.teaching.com.myapplication.View.GameDetailView;
+import miprimeraapp.android.teaching.com.myapplication.fragments.GameDetailFragment;
 import miprimeraapp.android.teaching.com.myapplication.model.GameModel;
 import miprimeraapp.android.teaching.com.myapplication.presenter.GameDetailPresenter;
 
 public class GameDetailActivity extends AppCompatActivity
     implements GameDetailView {
     private GameDetailPresenter presenter;
-    private int currentGameId;
-    private String currentGameWebsite;
+    private int currentposition;
+    private MyPagerAdapter myPagerAdapter;
 
 
     @Override
@@ -34,14 +40,34 @@ public class GameDetailActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle(R.string.GameDetail);
         presenter = new GameDetailPresenter();
-        currentGameId = getIntent().getIntExtra("iddeljuego", 0);
+        currentposition = getIntent().getIntExtra("position", 0);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         presenter.startPresenting(this);
-        presenter.loadGameWithId(currentGameId);
+        final ViewPager myViewPager = findViewById(R.id.View_pager);
+        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        myViewPager.setAdapter(myPagerAdapter);
+        myViewPager.setCurrentItem(currentposition);
+        getSupportActionBar().setTitle(myPagerAdapter.getPageTitle(currentposition));
+        myViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            getSupportActionBar().setTitle(myPagerAdapter.getPageTitle(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void Website(View view) {
@@ -52,21 +78,28 @@ public class GameDetailActivity extends AppCompatActivity
 
     @Override
     public void onGameLoaded(GameModel game) {
-        ImageView icono = findViewById(R.id.game_icon);
-        ImageView background = findViewById(R.id.Fondodetail);
-        TextView description = findViewById(R.id.Info);
-
-
-        description.setText(game.getDescription());
-        background.setImageResource(game.getBackgroundDrawable());
-        icono.setImageResource(game.getIconDrawable());
-        getSupportActionBar().setTitle(game.getName());
-        this.currentGameWebsite = game.getOfficialWebsiteUrl();
-
     }
-    public void goToWebsite (View view) {
-        Intent websiteIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(currentGameWebsite));
-        startActivity(websiteIntent);
+    private class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            int gameId = presenter.getGames().get(position).getId();
+            return GameDetailFragment.newInstance(gameId);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return presenter.getGames().get(position).getName();
+        }
+
+        @Override
+        public int getCount() {
+            return presenter.getGames().size();
+        }
     }
 }

@@ -1,17 +1,23 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.net.ConnectException;
 
 public class LoginActivity extends BaseActivity {
     private EditText usernameEditText;
@@ -32,6 +38,14 @@ public class LoginActivity extends BaseActivity {
         passwordEditText = findViewById(R.id.password);
         Toast.makeText(this, getString(R.string.LoginToast),
                 Toast.LENGTH_LONG).show();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_preferences),Context.MODE_PRIVATE);
+        String saveduser = sharedPref.getString("username_key", "no-user");
+        usernameEditText.setText(saveduser);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,13 +75,22 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
     }
     public void doLogin (View view) {
+
+
         String username = usernameEditText.getText().toString();
-        String password = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
         if (TextUtils.isEmpty(username)) {
             usernameEditText.setError(getString(R.string.usernameerror));
         } else if (TextUtils.isEmpty(password)) {
             passwordEditText.setError(getString(R.string.passworderror));
         } else {
+            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor myEditor = sharedPref.edit();
+            myEditor.putString("username_key", username);
+            myEditor.apply();
+
+
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
