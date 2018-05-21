@@ -7,7 +7,6 @@
     android:layout_height="40dp"
     android:background="?attr/colorAccent"
     android:minHeight="?attr/actionBarSize"
-    app:title="Hola"
+    app:title="Esta toolbar es la del XML"
     app:titleTextColor="@color/white"
-    android:theme="?attr/actionBarTheme"
-    tools:showIn="@layout/activity_second" />
+    android:theme="?attr/actionBarTheme" />

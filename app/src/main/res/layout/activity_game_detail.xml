@@ -11,41 +11,13 @@
         android:id="@+id/toolbar"/>
 
 
-    <ImageView
-        android:id="@+id/game_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_below="@id/toolbar"
-        android:adjustViewBounds="true"
-        android:foregroundGravity="center"
-        android:scaleType="fitXY"
-        android:src="@drawable/wow1"
-        android:visibility="visible" />
+   <android.support.v4.view.ViewPager
+       android:layout_width="match_parent"
+       android:layout_below="@id/toolbar"
+       android:layout_height="match_parent"
+       android:id="@+id/View_pager">
 
-    <ImageView
-        android:id="@+id/Fondodetail"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/toolbar"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/imagen1" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:id="@+id/Info"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Fondodetail"
-        android:text="@string/InfoWoW"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/botonurl"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Info"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:onClick="Website"
-        android:text="@string/OfficialWebsite" />
+   </android.support.v4.view.ViewPager>
 
 
 </RelativeLayout>

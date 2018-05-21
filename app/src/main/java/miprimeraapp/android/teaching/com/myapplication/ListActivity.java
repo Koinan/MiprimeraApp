@@ -2,10 +2,12 @@ package miprimeraapp.android.teaching.com.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 import miprimeraapp.android.teaching.com.myapplication.interactors.GamesInteractor;
@@ -40,6 +43,12 @@ public class ListActivity extends BaseActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
         getSupportActionBar().setTitle("eSports");
+        File directoriointerno = getFilesDir();
+        File directorioexterno = getCacheDir();
+        Log.d("ListActivity", "Interno:" + directoriointerno);
+        Log.d("ListActivity", "Externo:" + directorioexterno);
+
+
 
 
 
@@ -56,12 +65,32 @@ public class ListActivity extends BaseActivity {
 
                     Intent intent = new Intent (ListActivity.this, GameDetailActivity.class);
                     int gameId = new GamesInteractor().getGames().get(position).getId();
-                    intent.putExtra("iddeljuego", gameId);
+                    intent.putExtra("position", position);
                     startActivity(intent);
 
             }
         });
     }
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+        {
+            return true;
+        }
+        return false;
+    }
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+
+        if (Environment.MEDIA_MOUNTED.equals(state))
+        {
+            return true;
+        }
+        return false;
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
