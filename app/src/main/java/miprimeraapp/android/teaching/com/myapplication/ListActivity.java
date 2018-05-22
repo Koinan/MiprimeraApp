@@ -47,6 +47,8 @@ public class ListActivity extends BaseActivity {
         File directorioexterno = getCacheDir();
         Log.d("ListActivity", "Interno:" + directoriointerno);
         Log.d("ListActivity", "Externo:" + directorioexterno);
+        //Esto crea la carpeta privada sdcard
+        getExternalFilesDir(null);
 
 
 

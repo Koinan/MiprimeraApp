@@ -1,10 +1,14 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
 import android.app.DatePickerDialog;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteConstraintException;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -19,10 +23,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import java.io.File;
 import java.net.URLEncoder;
+import java.sql.SQLClientInfoException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
@@ -76,6 +83,11 @@ public class ProfileActivity extends BaseActivity {
         myActionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
+        File imgFile = new File(getExternalFilesDir(null), "descarga.png");
+        if(imgFile.exists()) {
+            ImageView myImage= findViewById(R.id.imageview34);
+            myImage.setImageURI(Uri.fromFile(imgFile));
+        }
     }
 
     @Override
@@ -177,9 +189,29 @@ public class ProfileActivity extends BaseActivity {
             Log.d("ProfileActivity", "Gender female");
 
         }
-        startActivity(intent);
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "dblogin").allowMainThreadQueries().build();
+        try {
+            user myNewUser = new user();
+            myNewUser.setUsername(usernameEditText.getText().toString());
+            myNewUser.setPassword(passwordEditText.getText().toString());
+            myNewUser.setEmail(EmailEditText.getText().toString());
+            myNewUser.setAge(ageEditText.getText().toString());
+            if (radiobuttonM.isChecked()) {
+                myNewUser.setGender("Male");
+            } else if(radioButtonF.isChecked()) {
+                myNewUser.setGender("Female");
+            }
+            db.userDao().insert(myNewUser);
+            startActivity(intent);
+        }catch (SQLiteConstraintException ex) {
+            Toast.makeText(this, "Username already taken", Toast.LENGTH_LONG).show();
+            //Algún error ha ocurrido al insertar
+        }
+
         }
         private void botonguardar() {
+
 
             Intent intent = new Intent(this, LoginActivity.class);
             Log.d("ProfileActivity", "Username:" + usernameEditText.getText());
@@ -193,13 +225,7 @@ public class ProfileActivity extends BaseActivity {
             myEditor.remove("age_key");
             myEditor.apply();
 
-            //Radio button
-            if (radiobuttonM.isChecked()) {
-                Log.d("ProfileActivity", "Gender male");
-            } else if(radioButtonF.isChecked()) {
-                Log.d("ProfileActivity", "Gender female");
 
-            }
             startActivity(intent);
 
 
