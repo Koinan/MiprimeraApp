@@ -1,4 +1,4 @@
-package miprimeraapp.android.teaching.com.myapplication;
+    package miprimeraapp.android.teaching.com.myapplication;
 
 import android.app.DatePickerDialog;
 import android.arch.persistence.room.Room;
@@ -87,6 +87,7 @@ public class ProfileActivity extends BaseActivity {
         if(imgFile.exists()) {
             ImageView myImage= findViewById(R.id.imageview34);
             myImage.setImageURI(Uri.fromFile(imgFile));
+
         }
     }
 
@@ -94,18 +95,34 @@ public class ProfileActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
-        String saveduser = sharedPref.getString("username_key", "no-user");
-        String saveduser3 = sharedPref.getString("email_key", "no-email");
-        String saveduser4 = sharedPref.getString("age_key", "no-age");
-        usernameEditText.setText(saveduser);
+        String saveduser0 = sharedPref.getString("usuario", "no-user");
+        String saveduser = sharedPref.getString("usuariologin", "no-user");
+        String saveduser3 = sharedPref.getString("usuarioemail", "no-email");
+        String saveduser4 = sharedPref.getString("usuarioage", "no-age");
+        String saveduser5 = sharedPref.getString("usuariogender", "no-gender");
+        AppDatabase myDatabase = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "dblogin").allowMainThreadQueries().build();
+        user myUser = myDatabase.userDao().findByUsername(saveduser0);
+        if (myUser != null) {
+            usernameEditText.setText(myUser.getUsername());
+            EmailEditText.setText(myUser.getEmail());
+            ageEditText.setText(myUser.getAge());
+            if (myUser.getGender().equals(("H"))) {
+                radiobuttonM.setChecked(true);
+            } else if (myUser.getGender().equals("M")) {
+                radioButtonF.setChecked(true);
+            }
+
+        }
+        /*usernameEditText.setText(saveduser);
         EmailEditText.setText(saveduser3);
-        ageEditText.setText(saveduser4);
+        ageEditText.setText(saveduser4);*/
+
 
     }
     @Override
     protected void onStop() {
         super.onStop();
-        String username = usernameEditText.getText().toString();
+        /*String username = usernameEditText.getText().toString();
         String age = ageEditText.getText().toString();
         String email = EmailEditText.getText().toString();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
@@ -114,7 +131,7 @@ public class ProfileActivity extends BaseActivity {
         myEditor.putString("age_key", age);
         myEditor.putString("email_key", email);
 
-        myEditor.apply();
+        myEditor.apply();*/
 
 
 
@@ -236,9 +253,9 @@ public class ProfileActivity extends BaseActivity {
         Intent intent = new Intent(this, MainActivity.class);
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
         SharedPreferences.Editor myEditor = sharedPref.edit();
-        myEditor.remove("username_key");
-        myEditor.remove("email_key");
-        myEditor.remove("age_key");
+        myEditor.remove("usuariologin");
+        myEditor.remove("usuarioemail");
+        myEditor.remove("usuarioage");
         myEditor.apply();
 
         startActivity(intent);

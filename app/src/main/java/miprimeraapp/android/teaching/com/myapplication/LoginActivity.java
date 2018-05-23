@@ -91,14 +91,19 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show();
         }else if (password.equals(usuariologin.getPassword())) {
                  Toast.makeText(this, "Login OK", Toast.LENGTH_LONG).show();
-            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_preferences), Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_registry), Context.MODE_PRIVATE);
             SharedPreferences.Editor myEditor = sharedPref.edit();
-            myEditor.putString("username_key", username);
+            myEditor.putString("usuario", username);
+            myEditor.putString("usuariologin", usuariologin.getUsername());
+            myEditor.putString("usuarioemail", usuariologin.getEmail());
+            myEditor.putString("usuarioage", usuariologin.getAge());
+            myEditor.putString("usuariogender", usuariologin.getGender());
             myEditor.apply();
 
 
-            Intent intent = new Intent(this, ListActivity.class);
+            Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
+
 
         }else {
             Toast.makeText(this, "Invalid Login", Toast.LENGTH_LONG).show();
