@@ -1,5 +1,6 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,8 +37,6 @@ public class LoginActivity extends BaseActivity {
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        Toast.makeText(this, getString(R.string.LoginToast),
-                Toast.LENGTH_LONG).show();
     }
     @Override
     protected void onResume() {
@@ -79,20 +78,31 @@ public class LoginActivity extends BaseActivity {
 
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "dblogin").allowMainThreadQueries().build();
+            user usuariologin = db.userDao().findByUsername(username);
+
 
         if (TextUtils.isEmpty(username)) {
             usernameEditText.setError(getString(R.string.usernameerror));
         } else if (TextUtils.isEmpty(password)) {
             passwordEditText.setError(getString(R.string.passworderror));
-        } else {
+        } if (usuariologin == null) {
+            Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show();
+        }else if (password.equals(usuariologin.getPassword())) {
+                 Toast.makeText(this, "Login OK", Toast.LENGTH_LONG).show();
             SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_preferences), Context.MODE_PRIVATE);
             SharedPreferences.Editor myEditor = sharedPref.edit();
             myEditor.putString("username_key", username);
             myEditor.apply();
 
 
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
+
+        }else {
+            Toast.makeText(this, "Invalid Login", Toast.LENGTH_LONG).show();
+
         }
     }
 }
