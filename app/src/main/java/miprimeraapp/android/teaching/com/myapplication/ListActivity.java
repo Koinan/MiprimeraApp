@@ -1,5 +1,6 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -22,10 +23,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.List;
 
 import miprimeraapp.android.teaching.com.myapplication.interactors.GamesInteractor;
+import miprimeraapp.android.teaching.com.myapplication.model.GameModel;
 
 public class ListActivity extends BaseActivity {
     //Asigno los nombres e iconos a los atributos
@@ -34,10 +49,49 @@ public class ListActivity extends BaseActivity {
     int[] gameIcons = {R.drawable.wow1, R.drawable.sc1};
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Nuevo juego");
+        GameModel game = new GameModel(700, "Parchis", "Descripcion", "www.asdasd.com", 0, 0
+        );
+        myRef.setValue (game);
+
+        StringRequest myStringRequest = new StringRequest(Request.Method.GET, "https://miprimeraapp-db818.firebaseio.com/games.json",
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("ListActivity", "Response is : " + response);
+                        try {
+                            JSONArray myArray = new JSONArray(response);
+                            for (int i = 0; i < myArray.length();i++) {
+                                JSONObject object = myArray.getJSONObject(i);
+                                GameModel game = new GameModel(i,
+                                        object.getString("name"),
+                                        object.getString("description"),
+                                        object.getString("officialWebsiteUrl"),
+                                        0, 0
+                                        );
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue myQueue = Volley.newRequestQueue(this);
+        myQueue.add(myStringRequest);
+
+                setContentView(R.layout.activity_list);
         Toolbar myToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolBar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
