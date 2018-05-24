@@ -53,6 +53,7 @@ public class GameDetailActivity extends AppCompatActivity
         myViewPager.setCurrentItem(currentposition);
         getSupportActionBar().setTitle(myPagerAdapter.getPageTitle(currentposition));
         myViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -91,10 +92,10 @@ public class GameDetailActivity extends AppCompatActivity
             return GameDetailFragment.newInstance(gameId);
         }
 
-        @Nullable
+
         @Override
         public CharSequence getPageTitle(int position) {
-            return presenter.getGames().get(position).getName();
+            return " "; //presenter.getGames().get(position).getName();
         }
 
         @Override

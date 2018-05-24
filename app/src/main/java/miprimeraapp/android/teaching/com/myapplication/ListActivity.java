@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,14 +40,18 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.List;
 
+import miprimeraapp.android.teaching.com.myapplication.interactors.GamesFirebaseInteractor;
 import miprimeraapp.android.teaching.com.myapplication.interactors.GamesInteractor;
+import miprimeraapp.android.teaching.com.myapplication.interactors.GamesInteractorCallback;
 import miprimeraapp.android.teaching.com.myapplication.model.GameModel;
 
 public class ListActivity extends BaseActivity {
+    private MyAdapter myAdapter;
+    private ListView listview;
+    private GamesFirebaseInteractor gamesFirebaseInteractor;
+
     //Asigno los nombres e iconos a los atributos
 
-    String[] gameNames = {"World of Warcraft", "Starcraft"};
-    int[] gameIcons = {R.drawable.wow1, R.drawable.sc1};
 
 
 
@@ -54,13 +59,22 @@ public class ListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        gamesFirebaseInteractor = new GamesFirebaseInteractor();
+        gamesFirebaseInteractor.getGames(new GamesInteractorCallback() {
+            @Override
+            public void onGamesAvailable() {
+                findViewById(R.id.loading).setVisibility(View.GONE);
+                myAdapter = new MyAdapter();
+                listview.setAdapter (new MyAdapter());
+            }
+        });
+        /* FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Nuevo juego");
         GameModel game = new GameModel(700, "Parchis", "Descripcion", "www.asdasd.com", 0, 0
         );
-        myRef.setValue (game);
+        myRef.setValue (game); */
 
-        StringRequest myStringRequest = new StringRequest(Request.Method.GET, "https://miprimeraapp-db818.firebaseio.com/games.json",
+        /*StringRequest myStringRequest = new StringRequest(Request.Method.GET, "https://miprimeraapp-db818.firebaseio.com/games.json",
                 new Response.Listener<String>() {
 
                     @Override
@@ -90,7 +104,7 @@ public class ListActivity extends BaseActivity {
 
         RequestQueue myQueue = Volley.newRequestQueue(this);
         myQueue.add(myStringRequest);
-
+*/
                 setContentView(R.layout.activity_list);
         Toolbar myToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolBar);
@@ -110,11 +124,11 @@ public class ListActivity extends BaseActivity {
 
         //Encuentro los items en la lista XML y ejecuto el adapter
 
-        ListView listView = findViewById(R.id.list_View);
-        listView.setAdapter (new MyAdapter());
+        listview = findViewById(R.id.list_View);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position , long id) {
@@ -173,7 +187,7 @@ public class ListActivity extends BaseActivity {
         //Con esta clase creo el adaptador, que hereda de Baseadapter
         @Override
         public int getCount() {
-            return 2;
+            return gamesFirebaseInteractor.getGames().size();
         }
         //Count es el numero de items que tendrá, si tiene mas de la cuenta la aplicación se cierra
         @Override
@@ -193,10 +207,12 @@ public class ListActivity extends BaseActivity {
             View rowView = inflater.inflate(R.layout.list_item, parent, false);
             //Situo los iconos y los nombres y les añado una posición en la lista
             ImageView icon = rowView.findViewById(R.id.imagentest);
-            icon.setImageResource(gameIcons[position]);
+            Glide.with(ListActivity.this).load(gamesFirebaseInteractor.getGames().get(position).getIcon()).into(icon);
+           // GlideApp.with(this).load("http://goo.gl/gEgYUd").into(imageView);
+            //icon.setImageResource(gameIcons[position]);
 
             TextView textView = rowView.findViewById(R.id.texttest);
-            textView.setText(gameNames[position]);
+            textView.setText(gamesFirebaseInteractor.getGames().get(position).getName());
 
             return rowView;
 
