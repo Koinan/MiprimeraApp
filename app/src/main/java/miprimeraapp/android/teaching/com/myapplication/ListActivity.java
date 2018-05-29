@@ -1,9 +1,20 @@
 package miprimeraapp.android.teaching.com.myapplication;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +43,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +61,7 @@ public class ListActivity extends BaseActivity {
     private MyAdapter myAdapter;
     private ListView listview;
     private GamesFirebaseInteractor gamesFirebaseInteractor;
+    private MyConnectivtyBroadcastReceiver myConnectivityReceiver;
 
     //Asigno los nombres e iconos a los atributos
 
@@ -59,53 +72,54 @@ public class ListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gamesFirebaseInteractor = new GamesFirebaseInteractor();
-        gamesFirebaseInteractor.getGames(new GamesInteractorCallback() {
-            @Override
-            public void onGamesAvailable() {
-                findViewById(R.id.loading).setVisibility(View.GONE);
-                myAdapter = new MyAdapter();
-                listview.setAdapter (new MyAdapter());
-            }
-        });
-        /* FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("Nuevo juego");
-        GameModel game = new GameModel(700, "Parchis", "Descripcion", "www.asdasd.com", 0, 0
-        );
-        myRef.setValue (game); */
+        setContentView(R.layout.activity_list);
 
-        /*StringRequest myStringRequest = new StringRequest(Request.Method.GET, "https://miprimeraapp-db818.firebaseio.com/games.json",
-                new Response.Listener<String>() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            
+            obtenerUbicacion();
+// Tenemos permisos
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                    100);
+// No tenemos permisos
+        }
 
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("ListActivity", "Response is : " + response);
-                        try {
-                            JSONArray myArray = new JSONArray(response);
-                            for (int i = 0; i < myArray.length();i++) {
-                                JSONObject object = myArray.getJSONObject(i);
-                                GameModel game = new GameModel(i,
-                                        object.getString("name"),
-                                        object.getString("description"),
-                                        object.getString("officialWebsiteUrl"),
-                                        0, 0
-                                        );
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        myConnectivityReceiver = new MyConnectivtyBroadcastReceiver();
+        registerReceiver(myConnectivityReceiver, intentFilter);
 
-            }
-        });
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        RequestQueue myQueue = Volley.newRequestQueue(this);
-        myQueue.add(myStringRequest);
-*/
-                setContentView(R.layout.activity_list);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null
+                && activeNetwork.isConnectedOrConnecting();
+        if (isConnected == false) {
+            findViewById(R.id.loading).setVisibility(View.GONE);
+            Toast.makeText(this, "No connection", Toast.LENGTH_LONG).show();
+
+        } else {
+            String token = FirebaseInstanceId.getInstance().getToken();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference databaseReference = database.getReference("device_push_token");
+            databaseReference.setValue(token);
+
+            gamesFirebaseInteractor = new GamesFirebaseInteractor();
+            gamesFirebaseInteractor.getGames(new GamesInteractorCallback() {
+                @Override
+                public void onGamesAvailable() {
+                    findViewById(R.id.loading).setVisibility(View.GONE);
+                    myAdapter = new MyAdapter();
+                    listview.setAdapter (new MyAdapter());
+                }
+            });
+        }
+
+
         Toolbar myToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolBar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
@@ -117,10 +131,6 @@ public class ListActivity extends BaseActivity {
         Log.d("ListActivity", "Externo:" + directorioexterno);
         //Esto crea la carpeta privada sdcard
         getExternalFilesDir(null);
-
-
-
-
 
         //Encuentro los items en la lista XML y ejecuto el adapter
 
@@ -140,6 +150,31 @@ public class ListActivity extends BaseActivity {
 
             }
         });
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == 100) {
+            if (grantResults.length > 0
+                    &&  grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this, "Permission not granted", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(myConnectivityReceiver);
     }
     public boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
@@ -217,5 +252,33 @@ public class ListActivity extends BaseActivity {
             return rowView;
 
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void obtenerUbicacion() {
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.d("Location changed", "location is" + location.toString());
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
     }
 }

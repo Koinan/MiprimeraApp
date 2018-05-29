@@ -15,9 +15,11 @@ public class GamesInteractor {
             GameModel SCGameModel = new GameModel(1, "Starcraft", "Descripcion SC",
                     "https://starcraft.com", " ", " ");
 
+
             games = new ArrayList<>();
             games.add(WoWGameModel);
             games.add(SCGameModel);
+
 
 
         }
