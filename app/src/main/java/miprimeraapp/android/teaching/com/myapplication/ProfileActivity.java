@@ -7,11 +7,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,16 +49,20 @@ public class ProfileActivity extends BaseActivity {
     private EditText ageEditText;
     private RadioButton radiobuttonM;
     private RadioButton radioButtonF;
+    private ImageView imageview;
 
-    @Override
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
+
         //obtengo el Id con findViewById
         usernameEditText = findViewById(R.id.username);
         EmailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         ageEditText = findViewById((R.id.age));
+
+
         ageEditText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
 
             @Override
@@ -137,6 +146,7 @@ public class ProfileActivity extends BaseActivity {
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -226,6 +236,8 @@ public class ProfileActivity extends BaseActivity {
             //Algún error ha ocurrido al insertar
         }
 
+
+
         }
         private void botonguardar() {
 
@@ -261,5 +273,50 @@ public class ProfileActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    public void clickprofileimage (View v) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager())!= null) {
+
+            File photoFile = createImageFile();
+            Uri photoURI = FileProvider.getUriForFile(this, "miprimeraapp.android.teaching.com.myapplication", photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, 100);
+        }
+
+
+
+
+    }
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+           imageview = findViewById(R.id.imageview34);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageview.setImageBitmap(imageBitmap);
+            createImageFile();
+        } else if (requestCode == 100 && resultCode == RESULT_CANCELED){
+            Toast.makeText(this, "New profile pic canceled", Toast.LENGTH_LONG).show();
+        }
+    }*/
+    private File createImageFile() {
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        return new File(storageDir,"profile.jpg");
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        File myFile = createImageFile();
+        if (myFile.exists()) {
+            ImageView imageView = findViewById(R.id.imageview34);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(myFile.getAbsolutePath()));
+        }
+    }
 
 }
+
+

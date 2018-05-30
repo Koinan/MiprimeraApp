@@ -14,7 +14,9 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageview34"/>
+        android:id="@+id/imageview34"
+        android:onClick="clickprofileimage"/>
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"

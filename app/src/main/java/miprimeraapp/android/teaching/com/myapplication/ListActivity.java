@@ -77,7 +77,7 @@ public class ListActivity extends BaseActivity {
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            
+
             obtenerUbicacion();
 // Tenemos permisos
         } else {
