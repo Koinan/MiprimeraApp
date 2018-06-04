@@ -4,9 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="androandrormission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -14,25 +16,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
-            android:name= "android.support.v4.content.FileProvider"
-            android:authorities= "miprimeraapp.android.teaching.com.myapplication"
-            android:exported= "false"
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="miprimeraapp.android.teaching.com.myapplication"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                android:name= "android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
-
-
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/wow1"/>
+            android:resource="@drawable/wow1" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -40,8 +40,7 @@
         </service>
         <service android:name=".MyFirebaseInstanceIdService">
             <intent-filter>
-                <action
-                    android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -64,13 +63,7 @@
             android:name=".LoginActivity"
             android:parentActivityName=".ListActivity" />
         <activity android:name=".GalleryActivity" />
-        <activity android:name=".ListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ListActivity"></activity>
         <activity android:name=".BaseActivity" />
         <activity android:name=".FragmenTestActivity" />
         <activity
@@ -83,10 +76,20 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONECTIVITY_CHANGE"></action>
+                <action android:name="android.net.conn.CONECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".RecyclerViewActivity">
+
+        </activity>
+        <activity android:name=".MediaPlayerAcMvity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

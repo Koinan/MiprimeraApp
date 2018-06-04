@@ -137,12 +137,12 @@ public class ListActivity extends BaseActivity {
         listview = findViewById(R.id.list_View);
 
 
-
+        //lista
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position , long id) {
-
+//En gameDetailActivity estan los datos con los que relleno la lista.. mediante el adaptador.
                     Intent intent = new Intent (ListActivity.this, GameDetailActivity.class);
                     int gameId = new GamesInteractor().getGames().get(position).getId();
                     intent.putExtra("position", position);
@@ -195,7 +195,7 @@ public class ListActivity extends BaseActivity {
         return false;
 
     }
-
+    //inflarmenu de opciones
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
@@ -219,7 +219,7 @@ public class ListActivity extends BaseActivity {
 
     private class MyAdapter extends BaseAdapter {
 
-        //Con esta clase creo el adaptador, que hereda de Baseadapter
+        //Con ésta clase creo el adaptador, que hereda de Baseadapter
         @Override
         public int getCount() {
             return gamesFirebaseInteractor.getGames().size();
@@ -253,7 +253,7 @@ public class ListActivity extends BaseActivity {
 
         }
     }
-
+        //para el gps
     @SuppressLint("MissingPermission")
     private void obtenerUbicacion() {
         LocationManager locationManager = (LocationManager)
