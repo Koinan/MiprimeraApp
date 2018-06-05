@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,6 +18,23 @@
 
         android:onClick="onClickPlay"
         android:id="@+id/Playbuttom"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hola"
+        android:id="@+id/texto80"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:progress="0" />
     <Button
 
         android:layout_toEndOf="@+id/Playbuttom"
@@ -26,5 +46,10 @@
         android:text="Pause"
         android:onClick="onClickPause"
         android:id="@+id/Pausebuttom"/>
+    <VideoView
+        android:layout_below="@id/Playbuttom"
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="220dp" />
 
 </RelativeLayout>
