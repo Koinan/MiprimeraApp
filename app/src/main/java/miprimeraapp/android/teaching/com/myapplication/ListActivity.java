@@ -103,15 +103,19 @@ public class ListActivity extends BaseActivity {
             Toast.makeText(this, "No connection", Toast.LENGTH_LONG).show();
 
         } else {
+            //token para mensajes push de Firebase
             String token = FirebaseInstanceId.getInstance().getToken();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference databaseReference = database.getReference("device_push_token");
             databaseReference.setValue(token);
 
+
+            //carga la lista con cosas de la base de datos de firebase
             gamesFirebaseInteractor = new GamesFirebaseInteractor();
             gamesFirebaseInteractor.getGames(new GamesInteractorCallback() {
                 @Override
                 public void onGamesAvailable() {
+                    //barra de carga
                     findViewById(R.id.loading).setVisibility(View.GONE);
                     myAdapter = new MyAdapter();
                     listview.setAdapter (new MyAdapter());
@@ -137,14 +141,14 @@ public class ListActivity extends BaseActivity {
         listview = findViewById(R.id.list_View);
 
 
-        //lista
+        //lista, set on click listener es para que ejecute algo al hacer click
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position , long id) {
-//En gameDetailActivity estan los datos con los que relleno la lista.. mediante el adaptador.
+                    //En gameDetailActivity estan los datos con los que relleno la lista.. mediante el adaptador.
                     Intent intent = new Intent (ListActivity.this, GameDetailActivity.class);
-                    int gameId = new GamesInteractor().getGames().get(position).getId();
+                    int gameId = new GamesInteractor().getGames().get(position).getId(); //obtener juegos, posicion de array, y el ID
                     intent.putExtra("position", position);
                     startActivity(intent);
 
@@ -195,7 +199,7 @@ public class ListActivity extends BaseActivity {
         return false;
 
     }
-    //inflarmenu de opciones
+    //inflar menu de opciones de toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
@@ -216,7 +220,7 @@ public class ListActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+        //Clase para crear el adaptador de la listview
     private class MyAdapter extends BaseAdapter {
 
         //Con ésta clase creo el adaptador, que hereda de Baseadapter
@@ -245,7 +249,7 @@ public class ListActivity extends BaseActivity {
             Glide.with(ListActivity.this).load(gamesFirebaseInteractor.getGames().get(position).getIcon()).into(icon);
            // GlideApp.with(this).load("http://goo.gl/gEgYUd").into(imageView);
             //icon.setImageResource(gameIcons[position]);
-
+            //este textview se saca de la firebase
             TextView textView = rowView.findViewById(R.id.texttest);
             textView.setText(gamesFirebaseInteractor.getGames().get(position).getName());
 
@@ -253,7 +257,7 @@ public class ListActivity extends BaseActivity {
 
         }
     }
-        //para el gps
+        //para el gps, consumo de bateria alto
     @SuppressLint("MissingPermission")
     private void obtenerUbicacion() {
         LocationManager locationManager = (LocationManager)
@@ -279,6 +283,6 @@ public class ListActivity extends BaseActivity {
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,999999,999999,listener);
     }
 }

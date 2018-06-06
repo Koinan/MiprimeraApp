@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 
 @Dao
 public interface UserDao {
+    //comandos de bases de datos
     @Query("SELECT * FROM user WHERE username IS :username")
     user findByUsername(String username);
     @Insert

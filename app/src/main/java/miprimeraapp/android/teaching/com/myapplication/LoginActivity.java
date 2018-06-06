@@ -78,12 +78,11 @@ public class LoginActivity extends BaseActivity {
 
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        //aqui comienza "ROOM"
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dblogin").allowMainThreadQueries().build();
             user usuariologin = db.userDao().findByUsername(username);
-
-
-        if (TextUtils.isEmpty(username)) {
+            if (TextUtils.isEmpty(username)) {
             usernameEditText.setError(getString(R.string.usernameerror));
         } else if (TextUtils.isEmpty(password)) {
             passwordEditText.setError(getString(R.string.passworderror));

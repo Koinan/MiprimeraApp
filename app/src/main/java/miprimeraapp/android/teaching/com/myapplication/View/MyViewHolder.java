@@ -22,8 +22,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(String value) {
         myTextView.setText(value);
-        myTextView
-                .setBackgroundColor(Color.parseColor(value));
+        myTextView.setBackgroundColor(Color.parseColor(value));
         myTextView.setHeight(new Random().nextInt(500) + 200);
     }
 }
